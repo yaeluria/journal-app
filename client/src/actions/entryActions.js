@@ -1,5 +1,5 @@
 import {SAVE_ENTRY, GET_ERRORS} from "./types";
-//import axios from "axios";
+import axios from "axios";
 
 // export const registerUser = (userData, history) => dispatch => {
 //     axios
@@ -29,10 +29,27 @@ import {SAVE_ENTRY, GET_ERRORS} from "./types";
 //     payload: decoded
 //   };
 // };
-export const saveEntry = entryData => {
-  return{
-    type: SAVE_ENTRY,
-    payload: entryData
-  }
+// export const saveEntry = entryData => {
+//   return{
+//     type: SAVE_ENTRY,
+//     payload: entryData
+//   }
   
-}
+// }
+export const saveEntry = (entryData, history) => dispatch => {
+  axios
+    .post("/api/entries/new", entryData)
+    .then(res => {
+      dispatch({
+        type: SAVE_ENTRY,
+        payload: res.data
+      })
+      history.push("/dashboard")
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
