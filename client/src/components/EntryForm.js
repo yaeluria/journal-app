@@ -44,9 +44,9 @@ function EntryForm(props) {
   });
   const disabled = values.title.length <= 0 || values.content.length <= 0;
   //const errorText = (values.title.length <= 0 || values.content.length <= 0) ? "Please fill "
-
+ 
   const entryArray = useSelector(state => state.entries);
-  //const name = useSelector(state => state.auth.user.name);
+  let authorId = useSelector(state => state.auth.user.id);
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -79,7 +79,8 @@ function EntryForm(props) {
       e.preventDefault()
       const newEntry = {
         title: values.title,
-        content: values.content
+        content: values.content,
+        author: authorId
       };
       dispatch(saveEntry(newEntry,props.history))
      // props.history.push('/dashboard');
