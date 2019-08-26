@@ -36,20 +36,33 @@ import axios from "axios";
 //   }
   
 // }
+// export const registerUser = (userData, history) => dispatch => {
+//   axios
+//     .post("/api/users/register", userData)
+//     .then(res => history.push("/login")) // re-direct to login on successful register
+//     .catch(err =>
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err.response.data
+//       })
+//     );
+// };
 export const saveEntry = (entryData, history) => dispatch => {
   axios
     .post("/api/entries/new", entryData)
     .then(res => {
+      history.push("/dashboard");
       dispatch({
         type: SAVE_ENTRY,
         payload: res.data
       })
-      history.push("/dashboard")
+      
     })
     .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+            dispatch({
+                       type: GET_ERRORS,
+                        payload: ((err||{}).response||{}).data || 'Error unexpected'
+                      })
+                    );
+      
 };

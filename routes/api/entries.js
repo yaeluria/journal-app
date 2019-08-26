@@ -1,38 +1,41 @@
 const express = require("express");
 const router = express.Router();
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const keys = require("../../config/keys");
-// Load input validation
-// const validateRegisterInput = require("../../validation/register");
-// const validateLoginInput = require("../../validation/login");
-// Load User model
+
 const Entry = require("../../models/Entry");
 
-// @route POST api/users/register
-// @desc Register user
-// @access Public
 router.post("/new", (req, res) => {
-    // Form validation
-//   const { errors, isValid } = validateRegisterInput(req.body);
-//   // Check validation
-//     if (!isValid) {
-//       return res.status(400).json(errors);
-//     }
 
- 
         const newEntry = new Entry({
           title: req.body.title,
           content: req.body.content,
+          author: req.body.author
         });
         newEntry
         .save()
-        // .then(user => res.json(user))
-        // .catch(err => console.log(err));
+         .then(entry => res.json(entry))
+         .catch(err => console.log(err));
       }
     );
 
-  
+  router.get("/entries", (req,res) => {
+    console.log("computing entries");
+    const currentUser = req.query.userId; 
+    if(currentUser){
+     Entry.find({"author": currentUser})
+      // Entry.find({})
+      .then(entries => {
+        if (!entries) {
+          return res.status(404).json({ entriesnotfound: "Entries not found" });
+        }
+        else{
+          res.json(entries);
+        }
+      })
+    }
+    else {
+      res.status(404).json({error: "NO USERID"});
+    }
+  })
   
 
   module.exports = router;

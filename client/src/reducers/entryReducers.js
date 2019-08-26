@@ -1,19 +1,25 @@
-import {SAVE_ENTRY} from "../actions/types";
+import {SAVE_ENTRY, GET_ENTRIES} from "../actions/types";
   const isEmpty = require("is-empty");
  
  
   
   const initialState = {
-   items: []
+   items: [],
+   entries: []
   };
   export default function(state = initialState, action) {
-    const newItem = action.payload;
     switch (action.type) {
       case SAVE_ENTRY:
         return {
           ...state,
+          newItem: action.payload,
           items: [...state.items, newItem]
         };
+      case GET_ENTRIES:
+      return {
+        ... state,
+        entries: 
+      }
                                                                                                                                                                                                                                                   
       default:
         return state;
