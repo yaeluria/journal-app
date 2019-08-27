@@ -29,11 +29,11 @@ const useStyles = makeStyles(theme => ({
 function EntryForm(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const editMode = () => {
-    if(props.editMode === "false"){
-      return "editmode is false"
-    }
-  } 
+  // const editMode = () => {
+  //   if(props.editMode === "false"){
+  //     return "editmode is false"
+  //   }
+  // } 
   // useEffect(() => {
   //   dispatch(saveEntry());
   // }, []);
@@ -86,7 +86,7 @@ function EntryForm(props) {
     
     }}
      className={classes.container} noValidate autoComplete="off">
-     <h2>{editMode}</h2>
+     <h2>{props.editMode}</h2>
       <TextField
         id="title"
         label="Title"
