@@ -36,6 +36,49 @@ router.post("/new", (req, res) => {
       res.status(404).json({error: "NO USERID"});
     }
   })
-  
+  router.get("/delete", (req,res) => {
+    const entryToBeDeleted = req.query.entryId; 
+   if (entryToBeDeleted){
+     Entry.findByIdAndDelete(entryToBeDeleted)
+      .then(result => {
+        console.log(result);
+        if (!result) {
+          return res.status(404).json({ entriesnotfound: "Entries not found" });
+        }
+        else{
+          res.json({succes: "true"});
+        }
+      })
+    }
+    else {
+      res.status(404).json({error: "NO USERID"});
+    }
+  })
 
+  router.post("/edit", (req,res) => {
+    const entryToBeEditedId = req.query.entryId;
+    const updatedData = req.query.updatedData 
+   if (entryToBeEditedId && updatedData){
+     Entry.findOneAndUpdate({_id: entryToBeEditedId},updatedData,{
+      returnNewDocument: true
+     })
+      .then(result => {
+        console.log(result);
+        if (!result) {
+          return res.status(404).json({ entryNotUpdated: "Entry not updated" });
+        }
+        else{
+          res.json({succes: "true"});
+        }
+      })
+    }
+    else {
+      if(!entryToBeEditedId){
+      res.status(404).json({error: "NO ENTRY ID"});
+      }
+      if(!updatedData){
+        res.status(404).json({error: "NO DATA TO UPDATE"});
+        }
+    }
+  })
   module.exports = router;
