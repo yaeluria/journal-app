@@ -29,13 +29,26 @@ const useStyles = makeStyles(theme => ({
 function EntryForm(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const editMode = () => {
+    if(props.editMode === "false"){
+      return "editmode is false"
+    }
+  } 
   // useEffect(() => {
   //   dispatch(saveEntry());
   // }, []);
+
   const [values, setValues] = React.useState({
-    title: "",
-    content: "",
-    errors: {},
+    // if (editMode){
+    //   title: "edit mode",
+    //   content: "",
+    // }
+    // else{
+      title: "",
+      content: "",
+       errors: {},
+    // }
+    
    
   });
  
@@ -49,14 +62,14 @@ function EntryForm(props) {
   };
   
 
-  const clearState= () =>{
-    setValues(
-      {
-        title: "",
-        content: ""
-      }
-    )
-  }
+  // const clearState= () =>{
+  //   setValues(
+  //     {
+  //       title: "",
+  //       content: ""
+  //     }
+  //   )
+  // }
 
   return (
  
@@ -67,11 +80,13 @@ function EntryForm(props) {
         title: values.title,
         content: values.content,
         author: authorId
-      };
-      dispatch(saveEntry(newEntry,props.history)).then(clearState());
+      }
+      dispatch(saveEntry(newEntry,props.history))
+      // .then(clearState())
     
     }}
      className={classes.container} noValidate autoComplete="off">
+     <h2>{editMode}</h2>
       <TextField
         id="title"
         label="Title"
