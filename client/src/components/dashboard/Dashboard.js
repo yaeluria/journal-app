@@ -75,7 +75,7 @@ export default function Dashboard() {
       <AppBar position="relative">
         <Toolbar>
       
-          <Button onClick={onLogoutClick} variant="outlined" color="textPrimary">
+          <Button onClick={onLogoutClick} variant="outlined" color="inherit">
           logout
           </Button>
         </Toolbar>
