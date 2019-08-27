@@ -47,27 +47,23 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  
   const authorId = useSelector(state => state.auth.user.id);
   const entries = useSelector(state => state.entries.items);
-
   useEffect(() => {
       if(authorId){
         dispatch(getEntries(authorId));
       }
+// eslint-disable-next-line react-hooks/exhaustive-deps
   },[entries.length]);
   
   const onLogoutClick = e => {
     e.preventDefault();
     dispatch(logoutUser());
   };
-  // const onClickEdit = e => {
-  //   e.preventDefault()
-  //   const editMode = true;
-  // }
-  const [editMode, setEditMode] = useState(
-    "false"
-  );
+
+  // const [editMode, setEditMode] = useState(
+  //   false
+  // );
  
   return (
     <React.Fragment>
@@ -91,7 +87,7 @@ export default function Dashboard() {
                 Create A Note
             </Typography>
             
-            <EntryForm editMode= {editMode} />
+            <EntryForm /* editMode= {editMode} *//>
           </Container>
          
 
@@ -112,9 +108,9 @@ export default function Dashboard() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary" onClick={() => setEditMode("true")}>
-                    Edit
-                    </Button>
+                { /*  <Button size="small" color="primary" onClick={() => setEditMode(true)}>
+                       Edit
+            </Button> */}
                     <Button 
                     onClick= {() => dispatch(deleteEntry(entry._id))}
                     size="small" 

@@ -55,30 +55,30 @@ router.post("/new", (req, res) => {
     }
   })
 
-  router.post("/edit", (req,res) => {
-    const entryToBeEditedId = req.query.entryId;
-    const updatedData = req.query.updatedData 
-   if (entryToBeEditedId && updatedData){
-     Entry.findOneAndUpdate({_id: entryToBeEditedId},updatedData,{
-      returnNewDocument: true
-     })
-      .then(result => {
-        console.log(result);
-        if (!result) {
-          return res.status(404).json({ entryNotUpdated: "Entry not updated" });
-        }
-        else{
-          res.json({succes: "true"});
-        }
-      })
-    }
-    else {
-      if(!entryToBeEditedId){
-      res.status(404).json({error: "NO ENTRY ID"});
-      }
-      if(!updatedData){
-        res.status(404).json({error: "NO DATA TO UPDATE"});
-        }
-    }
-  })
+  // router.post("/edit", (req,res) => {
+  //   const entryToBeEditedId = req.query.entryId;
+  //   const updatedData = req.query.updatedData 
+  //  if (entryToBeEditedId && updatedData){
+  //    Entry.findOneAndUpdate({_id: entryToBeEditedId},updatedData,{
+  //     returnNewDocument: true
+  //    })
+  //     .then(result => {
+  //       console.log(result);
+  //       if (!result) {
+  //         return res.status(404).json({ entryNotUpdated: "Entry not updated" });
+  //       }
+  //       else{
+  //         res.json({succes: "true"});
+  //       }
+  //     })
+  //   }
+  //   else {
+  //     if(!entryToBeEditedId){
+  //     res.status(404).json({error: "NO ENTRY ID"});
+  //     }
+  //     if(!updatedData){
+  //       res.status(404).json({error: "NO DATA TO UPDATE"});
+  //       }
+  //   }
+  // })
   module.exports = router;

@@ -1,13 +1,10 @@
-
 import React, {useEffect} from "react";
-import clsx from "clsx";
 import { withRouter } from "react-router-dom";
 import { saveEntry, editEntry } from "../actions/entryActions";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import {useSelector, useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { set } from "mongoose";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,47 +26,27 @@ const useStyles = makeStyles(theme => ({
 function EntryForm(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const editMode = () => {
-  //   if(props.editMode === "false"){
-  //     return "editmode is false"
-  //   }
-  // } 
-  // useEffect(() => {
-  //   dispatch(saveEntry());
-  // }, []);
 
-  const [values, setValues] = React.useState({
-    // if (editMode){
-    //   title: "edit mode",
-    //   content: "",
-    // }
-    // else{
-      title: "",
-      content: "",
-       errors: {},
-    // }
-    
-   
-  });
+
+  const state = { title: "",
+            content: "",
+            errors: {},
+        };
+  
+
+  const [values, setValues] = React.useState(state);
  
   const disabled = values.title.length <= 0 || values.content.length <= 0;
-  //const errorText = (values.title.length <= 0 || values.content.length <= 0) ? "Please fill "
+  
+  const errorTextTitle =  (values.title.length <= 0) ? "Please fill in the title field" : "";
+  const errorTextContent =  (values.content.length <= 0) ? "Please fill in the content field" : "";
  
-  const entryArray = useSelector(state => state.entries);
   let authorId = useSelector(state => state.auth.user.id);
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
   
 
-  // const clearState= () =>{
-  //   setValues(
-  //     {
-  //       title: "",
-  //       content: ""
-  //     }
-  //   )
-  // }
 
   return (
  
@@ -82,7 +59,7 @@ function EntryForm(props) {
         author: authorId
       }
       dispatch(saveEntry(newEntry,props.history))
-      // .then(clearState())
+     
     
     }}
      className={classes.container} noValidate autoComplete="off">
@@ -96,7 +73,7 @@ function EntryForm(props) {
         onChange={handleChange("title")}
         margin="normal"
         variant="outlined"
-       // helperText={errorText}
+        helperText={errorTextTitle}
       />
       <TextField
         id="filled-multiline-static"
@@ -108,7 +85,7 @@ function EntryForm(props) {
         className={classes.textField}
         margin="normal"
         variant="filled"
-        //helperText={errorText}
+        helperText={errorTextContent}
       />
       <Button variant="outlined"
        color="inherit"
